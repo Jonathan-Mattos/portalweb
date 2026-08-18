@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚀 Hub Interativo: Seletores CSS & Formulários HTML</title>
+  <style>
+    :root {
+      --bg-principal: #0b0f19;
+      --bg-card: #1e293b;
+      --bg-input: #0f172a;
+      --cor-primaria: #38bdf8;
+      --cor-secundaria: #a855f7;
+      --cor-sucesso: #22c55e;
+      --cor-alerta: #f59e0b;
+      --texto-cor: #f8fafc;
+      --texto-suave: #94a3b8;
+      --borda-cor: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-principal);
+      color: var(--texto-cor);
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    header {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto 20px auto;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: var(--cor-primaria);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--texto-suave);
+    }
+
+    /* BOTÃO VOLTAR AO INÍCIO CORRIGIDO */
+    .btn-acessar {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--cor-primaria);
+      border: 2px solid var(--cor-primaria);
+      padding: 8px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.95rem;
+      margin-top: 12px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-acessar:hover {
+      background: var(--cor-primaria);
+      color: #0b0f19;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* BARRA DE PESQUISA */
+    .search-box {
+      max-width: 600px;
+      margin: 20px auto 10px auto;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 30px;
+      border: 2px solid var(--borda-cor);
+      background: var(--bg-card);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--cor-primaria);
+    }
+
+    /* SELETOR DE MÓDULO PRINCIPAL (TOP NAV) */
+    .module-nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .module-btn {
+      background: var(--bg-card);
+      color: var(--texto-suave);
+      border: 2px solid var(--borda-cor);
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .module-btn:hover, .module-btn.active {
+      background: var(--cor-primaria);
+      color: #000;
+      border-color: var(--cor-primaria);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+
+    /* NAVEGAÇÃO DE SUB-ABAS */
+    .tabs-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    .tab-btn {
+      background: var(--bg-input);
+      color: var(--texto-suave);
+      border: 1px solid var(--borda-cor);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--cor-secundaria);
+      color: #fff;
+      border-color: var(--cor-secundaria);
+    }
+
+    /* CONTAINERS */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .module-content, .tab-content {
+      display: none;
+    }
+
+    .module-content.active, .tab-content.active {
+      display: block;
+    }
+
+    /* GRID DE CARDS */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--borda-cor);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: var(--cor-primaria);
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      color: var(--cor-primaria);
+      font-size: 1.15rem;
+    }
+
+    .card code.sintaxe, .card code.tag-name {
+      background: #030712;
+      color: #6ee7b7;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .card p.desc {
+      color: var(--texto-suave);
+      font-size: 0.9rem;
+    }
+
+    /* DEMO BOX */
+    .demo-box {
+      background: var(--bg-input);
+      border: 1px dashed var(--borda-cor);
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-demo, .btn-acao {
+      background: var(--cor-primaria);
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-demo:hover, .btn-acao:hover {
+      opacity: 0.9;
+    }
+
+    /* DESTAQUES E INTERAÇÃO DA ARENA CSS */
+    .hl-box {
+      transition: all 0.3s ease;
+      padding: 8px;
+      border-radius: 4px;
+      background: #334155;
+    }
+
+    .ativo-destaque {
+      background-color: var(--cor-sucesso) !important;
+      color: #000 !important;
+      font-weight: bold;
+    }
+
+    .texto-selecionavel::selection { background-color: #ec4899; color: #ffffff; }
+    .texto-primeira-letra::first-letter { font-size: 2rem; font-weight: bold; color: var(--cor-alerta); float: left; margin-right: 5px; line-height: 1; }
+    .texto-primeira-linha::first-line { color: var(--cor-secundaria); font-weight: bold; }
+    .input-demo::placeholder { color: #f43f5e; font-style: italic; }
+    .lista-marker li::marker { color: var(--cor-primaria); font-size: 1.2rem; }
+
+    .btn-interativo {
+      background: #0284c7; color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-interativo:hover { background: #22c55e; }
+    .btn-interativo:active { transform: scale(0.95); background: #f59e0b; }
+    .btn-interativo:focus { outline: 3px solid #38bdf8; }
+
+    .card-has { padding: 10px; border: 2px solid #475569; border-radius: 6px; }
+    .card-has:has(input:checked) { border-color: var(--cor-sucesso); background-color: rgba(34, 197, 94, 0.1); }
+
+    /* ESTILOS DA ARENA DE FORMULÁRIOS */
+    .demo-box label { font-size: 0.85rem; font-weight: bold; color: #cbd5e1; }
+    .demo-box input[type="text"],
+    .demo-box input[type="password"],
+    .demo-box input[type="email"],
+    .demo-box input[type="number"],
+    .demo-box select,
+    .demo-box textarea {
+      width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid var(--borda-cor); background: #1e293b; color: white; font-size: 0.9rem; outline: none;
+    }
+
+    .demo-box fieldset { border: 1px solid var(--cor-primaria); border-radius: 8px; padding: 12px; }
+    .demo-box legend { color: var(--cor-primaria); padding: 0 6px; font-weight: bold; font-size: 0.85rem; }
+    progress { width: 100%; height: 20px; accent-color: var(--cor-primaria); }
+    meter { width: 100%; height: 22px; }
+    .output-val { color: var(--cor-sucesso); font-weight: bold; font-size: 1.1rem; }
+    .form-preview-box { background: #090d16; border: 1px solid var(--borda-cor); border-radius: 8px; padding: 10px; font-family: monospace; color: #a7f3d0; font-size: 0.85rem; }
+  </style>
+</head>
+<body oncontextmenu="return false;">
+
+  <header>
+    <h1>Hub de Desenvolvimento Web</h1>
+    <p>Aprenda, explore e teste na prática Seletores CSS e Tags de Formulários HTML!</p>
+    <a href="index.html" class="btn-acessar">⬅️ Voltar ao Início</a>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Pesquisar em qualquer módulo (ex: :nth-child, input, fieldset, >)...">
+    </div>
+  </header>
+
+  <div class="module-nav">
+    <button class="module-btn active" onclick="openModule(event, 'modulo-css')">Módulo 1: Seletores CSS</button>
+    <button class="module-btn" onclick="openModule(event, 'modulo-forms')">Módulo 2: Formulários HTML</button>
+  </div>
+
+  <div class="main-container">
+
+    <div id="modulo-css" class="module-content active">
+      
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="openSubTab(event, 'modulo-css', 'css-basicos')">1. Básicos</button>
+        <button class="tab-btn" onclick="openSubTab(event, 'modulo-css', 'css-combinadores')">2. Combinadores</button>
+        <button class="tab-btn" onclick="openSubTab(event, 'modulo-css', 'css-atributos')">3. Atributos</button>
+        <button class="tab-btn" onclick="openSubTab(event, 'modulo-css', 'css-pseudoclasses')">4. Pseudo-classes</button>
+        <button class="tab-btn" onclick="openSubTab(event, 'modulo-css', 'css-pseudoelementos')">5. Pseudo-elementos</button>
+      </div>
+
+      <div id="css-basicos" class="tab-content active">
+        <div class="cards-grid">
+          <div class="card">
+            <h3>Universal (*)</h3>
+            <code class="sintaxe">* { ... }</code>
+            <p class="desc">Seleciona todos os elementos do documento HTML sem exceção.</p>
+            <div class="demo-box"><button class="btn-demo" onclick="destacarGrupo('*')">Testar * em tudo</button></div>
+          </div>
+          <div class="card">
+            <h3>De Tipo / Tag</h3>
+            <code class="sintaxe">p | div | h1</code>
+            <p class="desc">Seleciona todos os elementos correspondentes à tag informada.</p>
+            <div class="demo-box">
+              <div class="hl-box demo-tag-p">Parágrafo &lt;p&gt;</div>
+              <button class="btn-demo" onclick="destacarGrupo('.demo-tag-p')">Selecionar apenas &lt;p&gt;</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>De Classe (.classe)</h3>
+            <code class="sintaxe">.card | .destaque</code>
+            <p class="desc">Seleciona elementos que possuem a classe especificada.</p>
+            <div class="demo-box">
+              <div class="hl-box item-classe">Item com .item-classe</div>
+              <button class="btn-demo" onclick="destacarGrupo('.item-classe')">Testar .item-classe</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>De ID (#id)</h3>
+            <code class="sintaxe">#header | #app</code>
+            <p class="desc">Seleciona um único elemento exclusivo com o ID correspondente.</p>
+            <div class="demo-box">
+              <div class="hl-box" id="elemento-unico">Item com id="elemento-unico"</div>
+              <button class="btn-demo" onclick="destacarGrupo('#elemento-unico')">Testar #elemento-unico</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="css-combinadores" class="tab-content">
+        <div class="cards-grid">
+          <div class="card">
+            <h3>Descendente (A B)</h3>
+            <code class="sintaxe">div p</code>
+            <p class="desc">Seleciona B dentro de A em qualquer nível.</p>
+            <div class="demo-box" id="demo-descendente">
+              <div class="hl-box">Pai <div class="hl-box alvo-desc">Filho -> <span class="alvo-desc">Neto</span></div></div>
+              <button class="btn-demo" onclick="destacarGrupo('#demo-descendente .alvo-desc')">Testar Descendente</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Filho Direto (A > B)</h3>
+            <code class="sintaxe">ul > li</code>
+            <p class="desc">Seleciona B apenas se for filho direto (1º nível) de A.</p>
+            <div class="demo-box" id="demo-filho">
+              <div class="hl-box">Pai
+                <div class="hl-box alvo-filho">Filho Direto</div>
+                <div><span class="alvo-filho">Neto (Não afetado)</span></div>
+              </div>
+              <button class="btn-demo" onclick="destacarGrupo('#demo-filho > .hl-box > .alvo-filho')">Testar A > B</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Irmão Adjacente (A + B)</h3>
+            <code class="sintaxe">h1 + p</code>
+            <p class="desc">Seleciona B imediatamente após A.</p>
+            <div class="demo-box">
+              <div class="hl-box">Elemento A</div>
+              <div class="hl-box" id="alvo-adj">Elemento B (Adjacente)</div>
+              <button class="btn-demo" onclick="destacarGrupo('#alvo-adj')">Testar A + B</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Irmão Geral (A ~ B)</h3>
+            <code class="sintaxe">h2 ~ p</code>
+            <p class="desc">Seleciona todos os irmãos B que venham após A.</p>
+            <div class="demo-box">
+              <div class="hl-box">Elemento A</div>
+              <div class="hl-box alvo-geral">Irmão B1</div>
+              <div class="hl-box alvo-geral">Irmão B2</div>
+              <button class="btn-demo" onclick="destacarGrupo('.alvo-geral')">Testar A ~ B</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="css-atributos" class="tab-content">
+        <div class="cards-grid">
+          <div class="card">
+            <h3>[attr] (Presença)</h3>
+            <code class="sintaxe">[required]</code>
+            <p class="desc">Seleciona elementos que possuem o atributo especificado.</p>
+            <div class="demo-box">
+              <input type="text" required placeholder="Com required" class="demo-attr-req">
+              <button class="btn-demo" onclick="destacarGrupo('.demo-attr-req')">Testar [required]</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>[attr^="val"] (Começa com)</h3>
+            <code class="sintaxe">[href^="https"]</code>
+            <p class="desc">Seleciona se o valor inicia com o texto.</p>
+            <div class="demo-box">
+              <div class="hl-box attr-start">https://google.com</div>
+              <button class="btn-demo" onclick="destacarGrupo('.attr-start')">Testar [href^="https"]</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>[attr$="val"] (Termina com)</h3>
+            <code class="sintaxe">[href$=".pdf"]</code>
+            <p class="desc">Seleciona se o valor termina com o texto.</p>
+            <div class="demo-box">
+              <div class="hl-box attr-end">documento.pdf</div>
+              <button class="btn-demo" onclick="destacarGrupo('.attr-end')">Testar [href$=".pdf"]</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="css-pseudoclasses" class="tab-content">
+        <div class="cards-grid">
+          <div class="card">
+            <h3>Interação (:hover, :focus, :active)</h3>
+            <code class="sintaxe">:hover | :active | :focus</code>
+            <p class="desc">Reage a movimentos do mouse, cliques e foco.</p>
+            <div class="demo-box" style="text-align: center;">
+              <button class="btn-interativo">Interaja comigo!</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Estruturais (:nth-child)</h3>
+            <code class="sintaxe">:nth-child(even)</code>
+            <p class="desc">Seleciona com base na posição do elemento.</p>
+            <div class="demo-box" id="lista-nth">
+              <div class="hl-box item-n">Item 1</div>
+              <div class="hl-box item-n">Item 2</div>
+              <div class="hl-box item-n">Item 3</div>
+              <button class="btn-demo" onclick="destacarNth('even')">Testar Pares (even)</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Lógica :has()</h3>
+            <code class="sintaxe">.card:has(input:checked)</code>
+            <p class="desc">Estiliza o pai caso contenha o filho especificado.</p>
+            <div class="demo-box">
+              <div class="card-has"><label><input type="checkbox"> Marque para estilizar o Pai!</label></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="css-pseudoelementos" class="tab-content">
+        <div class="cards-grid">
+          <div class="card">
+            <h3>::first-letter e ::first-line</h3>
+            <code class="sintaxe">::first-letter | ::first-line</code>
+            <p class="desc">Estiliza a primeira letra ou linha de um texto.</p>
+            <div class="demo-box">
+              <p class="texto-primeira-letra texto-primeira-linha">Texto de demonstração dos pseudo-elementos.</p>
+            </div>
+          </div>
+          <div class="card">
+            <h3>::selection</h3>
+            <code class="sintaxe">::selection</code>
+            <p class="desc">Personaliza a seleção de texto do usuário.</p>
+            <div class="demo-box">
+              <p class="texto-selecionavel" style="color:var(--cor-primaria); font-weight:bold;">👉 Selecione este texto!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="modulo-forms" class="module-content">
+      
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="openSubTab(event, 'modulo-forms', 'form-estrutura')">1. Estrutura & Agrupamento</button>
+        <button class="tab-btn" onclick="openSubTab(event, 'modulo-forms', 'form-inputs')">2. Tipos de &lt;input&gt;</button>
+        <button class="tab-btn" onclick="openSubTab(event, 'modulo-forms', 'form-selecao')">3. Seleção & Opções</button>
+        <button class="tab-btn" onclick="openSubTab(event, 'modulo-forms', 'form-texto-botoes')">4. Botões & Áreas de Texto</button>
+        <button class="tab-btn" onclick="openSubTab(event, 'modulo-forms', 'form-feedback')">5. Feedback & Medidores</button>
+      </div>
+
+      <div id="form-estrutura" class="tab-content active">
+        <div class="cards-grid">
+          <div class="card">
+            <h3>Formulário Principal</h3>
+            <code class="tag-name">&lt;form&gt;</code>
+            <p class="desc">Container principal dos campos de entrada.</p>
+            <div class="demo-box">
+              <form onsubmit="enviarDemo(event)">
+                <label>Nome do Aluno:</label>
+                <input type="text" required placeholder="Digite seu nome...">
+                <button type="submit" class="btn-acao" style="margin-top:8px;">Submeter (&lt;form&gt;)</button>
+              </form>
+              <div class="form-preview-box" id="resultadoForm">Aguardando envio...</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Agrupamento e Título</h3>
+            <code class="tag-name">&lt;fieldset&gt; e &lt;legend&gt;</code>
+            <p class="desc">Cria caixas organizadoras com título.</p>
+            <div class="demo-box">
+              <fieldset>
+                <legend>Dados de Acesso</legend>
+                <label>Usuário:</label>
+                <input type="text" placeholder="Username">
+              </fieldset>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Rótulo de Campo</h3>
+            <code class="tag-name">&lt;label&gt;</code>
+            <p class="desc">Associa um texto descritivo a um input via id.</p>
+            <div class="demo-box">
+              <label for="input-label-demo">Clique AQUI no texto do label:</label>
+              <input type="text" id="input-label-demo" placeholder="Recebe o foco automaticamente">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="form-inputs" class="tab-content">
+        <div class="cards-grid">
+          <div class="card">
+            <h3>Texto, Senha & E-mail</h3>
+            <code class="tag-name">&lt;input type="text|password|email"&gt;</code>
+            <p class="desc">Campos essenciais para recolher dados de texto.</p>
+            <div class="demo-box">
+              <input type="text" placeholder="type='text'">
+              <input type="password" placeholder="type='password'">
+              <input type="email" placeholder="type='email'">
+            </div>
+          </div>
+          <div class="card">
+            <h3>Número & Intervalo</h3>
+            <code class="tag-name">&lt;input type="number|range"&gt;</code>
+            <p class="desc">Valores numéricos e barras deslizantes.</p>
+            <div class="demo-box">
+              <input type="number" value="20">
+              <label>type="range": <span id="valRange">50</span>%</label>
+              <input type="range" id="inputRange" value="50" oninput="atualizarRange(this.value)">
+            </div>
+          </div>
+          <div class="card">
+            <h3>Checkbox & Radio</h3>
+            <code class="tag-name">&lt;input type="checkbox|radio"&gt;</code>
+            <p class="desc">Múltipla escolha e escolha única.</p>
+            <div class="demo-box">
+              <label><input type="checkbox" checked> Opção Múltipla (checkbox)</label>
+              <label><input type="radio" name="opt" checked> Escolha Única A</label>
+              <label><input type="radio" name="opt"> Escolha Única B</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="form-selecao" class="tab-content">
+        <div class="cards-grid">
+          <div class="card">
+            <h3>Dropdown & Grupos</h3>
+            <code class="tag-name">&lt;select&gt;, &lt;option&gt;, &lt;optgroup&gt;</code>
+            <p class="desc">Menus de opções organizadas.</p>
+            <div class="demo-box">
+              <select>
+                <optgroup label="Front-End">
+                  <option>HTML / CSS</option>
+                  <option>JavaScript</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Autocompletar</h3>
+            <code class="tag-name">&lt;datalist&gt;</code>
+            <p class="desc">Sugestões de preenchimento dinâmico.</p>
+            <div class="demo-box">
+              <input type="text" list="langs" placeholder="Digite 'Java'...">
+              <datalist id="langs">
+                <option value="JavaScript">
+                <option value="Java">
+                <option value="Python">
+              </datalist>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="form-texto-botoes" class="tab-content">
+        <div class="cards-grid">
+          <div class="card">
+            <h3>Área de Texto</h3>
+            <code class="tag-name">&lt;textarea&gt;</code>
+            <p class="desc">Entrada de texto longo com múltiplas linhas.</p>
+            <div class="demo-box">
+              <textarea rows="3" placeholder="Digite a sua mensagem aqui..."></textarea>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Botões</h3>
+            <code class="tag-name">&lt;button&gt;</code>
+            <p class="desc">Botões com suporte a conteúdos enriquecidos.</p>
+            <div class="demo-box" style="flex-direction:row;">
+              <button class="btn-acao" type="button" onclick="alert('Botão clicado!')">Ação</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="form-feedback" class="tab-content">
+        <div class="cards-grid">
+          <div class="card">
+            <h3>Resultado Dinâmico</h3>
+            <code class="tag-name">&lt;output&gt;</code>
+            <p class="desc">Exibe resultados de cálculos em tempo real.</p>
+            <div class="demo-box">
+              <div style="display:flex; gap:8px; align-items:center;">
+                <input type="number" id="numA" value="5" style="width:70px;" oninput="calcularCalc()"> +
+                <input type="number" id="numB" value="10" style="width:70px;" oninput="calcularCalc()"> =
+                <output id="resultadoOutput" class="output-val">15</output>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Progresso & Medidor</h3>
+            <code class="tag-name">&lt;progress&gt; e &lt;meter&gt;</code>
+            <p class="desc">Barra de progresso e medidores de escala.</p>
+            <div class="demo-box">
+              <label>Progresso: <span id="txtProgresso">50%</span></label>
+              <progress id="meuProgress" value="50" max="100"></progress>
+              <button class="btn-acao" onclick="animarProgresso()">Animar Progresso</button>
+              <label style="margin-top:8px;">Bateria (&lt;meter&gt;):</label>
+              <meter min="0" max="100" low="20" high="80" optimum="100" value="85"></meter>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Gerenciador do Módulo Principal (CSS vs Forms)
+    function openModule(evt, moduleId) {
+      document.querySelectorAll('.module-content').forEach(mod => mod.classList.remove('active'));
+      document.querySelectorAll('.module-btn').forEach(btn => btn.classList.remove('active'));
+
+      const targetModule = document.getElementById(moduleId);
+      if (targetModule) {
+        targetModule.classList.add('active');
+      }
+
+      if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add('active');
+      }
+    }
+
+    // Gerenciador das Sub-abas internas de cada módulo
+    function openSubTab(evt, parentModuleId, tabId) {
+      const parentModule = document.getElementById(parentModuleId);
+      if (!parentModule) return;
+
+      parentModule.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      parentModule.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+      const targetTab = document.getElementById(tabId);
+      if (targetTab) {
+        targetTab.classList.add('active');
+      }
+
+      if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add('active');
+      }
+    }
+
+    // Funções de Interação da Arena CSS
+    function destacarGrupo(seletor) {
+      limparDestaques();
+      try {
+        const elementos = document.querySelectorAll(seletor);
+        elementos.forEach(el => el.classList.add('ativo-destaque'));
+      } catch (err) {
+        console.warn('Seletor inválido para teste dinâmico:', seletor);
+      }
+    }
+
+    function limparDestaques() {
+      document.querySelectorAll('.ativo-destaque').forEach(el => el.classList.remove('ativo-destaque'));
+    }
+
+    function destacarNth(tipo) {
+      limparDestaques();
+      const itens = document.querySelectorAll('#lista-nth .item-n');
+      itens.forEach((item, index) => {
+        const posicao = index + 1;
+        if (tipo === 'even' && posicao % 2 === 0) item.classList.add('ativo-destaque');
+        if (tipo === 'odd' && posicao % 2 !== 0) item.classList.add('ativo-destaque');
+      });
+    }
+
+    // Funções de Interação da Arena de Formulários
+    function atualizarRange(val) {
+      document.getElementById('valRange').textContent = val;
+    }
+
+    function calcularCalc() {
+      const a = parseFloat(document.getElementById('numA').value) || 0;
+      const b = parseFloat(document.getElementById('numB').value) || 0;
+      document.getElementById('resultadoOutput').value = a + b;
+    }
+
+    function enviarDemo(e) {
+      e.preventDefault();
+      const res = document.getElementById('resultadoForm');
+      res.textContent = '✅ Formulário submetido com sucesso via JS (preventDefault)!';
+      res.style.color = '#34d399';
+    }
+
+    function animarProgresso() {
+      const prog = document.getElementById('meuProgress');
+      const txt = document.getElementById('txtProgresso');
+      prog.value = 0;
+      const interval = setInterval(() => {
+        if (prog.value >= 100) {
+          clearInterval(interval);
+        } else {
+          prog.value += 10;
+          txt.textContent = prog.value + '%';
+        }
+      }, 150);
+    }
+
+    // Filtro de Busca em Tempo Real em Todo o Hub
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', function(e) {
+      const termo = e.target.value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.card');
+
+      if (termo === '') {
+        cards.forEach(card => card.style.display = 'flex');
+        return;
+      }
+
+      // Abre todos os conteúdos para a busca encontrar em qualquer módulo ou aba
+      document.querySelectorAll('.module-content, .tab-content').forEach(el => el.classList.add('active'));
+
+      cards.forEach(card => {
+        const texto = card.textContent.toLowerCase();
+        if (texto.includes(termo)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // --- BLOQUEIO DE INSPEÇÃO E BOTÃO DIREITO ---
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.keyCode === 123) { // F12
+        e.preventDefault();
+        return false;
+      }
+      if (e.ctrlKey && (
+          (e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+          e.keyCode === 85
+      )) { // Ctrl+Shift+I, J, C ou Ctrl+U
+        e.preventDefault();
+        return false;
+      }
+    });
+  </script>
+
+</body>
+</html>

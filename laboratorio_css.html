@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ Laboratório Interativo & Avançado de CSS</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* CABEÇALHO E BOTÃO VOLTAR */
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    header h1 {
+      color: #38bdf8;
+      margin-bottom: 5px;
+    }
+
+    header p.subtitulo {
+      color: #94a3b8;
+      margin-bottom: 15px;
+    }
+
+    .btn-voltar {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: #38bdf8;
+      border: 2px solid #38bdf8;
+      padding: 8px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-voltar:hover {
+      background: #38bdf8;
+      color: #0b0f19;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* LAYOUT PRINCIPAL DO LABORATÓRIO */
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 20px;
+    }
+
+    /* PAINEL DE CONTROLES */
+    .painel-controles {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .grupo-titulo {
+      color: #38bdf8;
+      font-size: 1rem;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 5px;
+      margin-top: 20px;
+      margin-bottom: 15px;
+    }
+
+    .grupo-titulo:first-child {
+      margin-top: 0;
+    }
+
+    .controle {
+      margin-bottom: 14px;
+    }
+
+    .controle label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .controle label span {
+      color: #f59e0b;
+    }
+
+    input[type="range"], select {
+      width: 100%;
+      accent-color: #38bdf8;
+      cursor: pointer;
+    }
+
+    select {
+      background: #0f172a;
+      color: #fff;
+      border: 1px solid #475569;
+      padding: 6px;
+      border-radius: 6px;
+    }
+
+    input[type="color"] {
+      width: 100%;
+      height: 35px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: transparent;
+    }
+
+    /* ÁREA DE VISUALIZAÇÃO */
+    .painel-visual {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ARENA FLEXBOX / CONTAINER PAI */
+    .arena-container {
+      background: #0f172a;
+      border: 2px dashed #475569;
+      border-radius: 10px;
+      min-height: 420px;
+      padding: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    /* CAMADAS VISUAIS DO BOX MODEL COM LEGENDAS */
+    .camada-margin {
+      background-color: rgba(249, 115, 22, 0.2);
+      border: 2px dashed #f97316;
+      transition: all 0.1s ease;
+      position: relative;
+    }
+
+    .camada-margin::before {
+      content: "MARGIN (Espaço Externo)";
+      position: absolute;
+      top: -18px;
+      left: 5px;
+      font-size: 0.7rem;
+      color: #f97316;
+      font-weight: bold;
+    }
+
+    .camada-padding {
+      background-color: rgba(34, 197, 94, 0.2);
+      border: 2px dashed #22c55e;
+      transition: all 0.1s ease;
+      position: relative;
+    }
+
+    .camada-padding::before {
+      content: "PADDING (Espaço Interno)";
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      font-size: 0.7rem;
+      color: #22c55e;
+      font-weight: bold;
+    }
+
+    /* A CAIXA ALVO */
+    .caixa-alvo {
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: bold;
+      transition: all 0.1s ease;
+      user-select: none;
+      box-sizing: border-box;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    /* CAIXAS EXTRAS PARA TESTAR FLEXBOX */
+    .caixa-extra {
+      width: 60px;
+      height: 60px;
+      background-color: #6366f1;
+      color: white;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      border-radius: 8px;
+    }
+
+    /* CÓDIGO CSS GERADO EM TEMPO REAL */
+    .codigo-saida {
+      background: #030712;
+      border-radius: 8px;
+      padding: 15px;
+      font-family: 'Courier New', Courier, monospace;
+      color: #6ee7b7;
+      border: 1px solid #1e293b;
+      overflow-x: auto;
+    }
+
+    .codigo-saida pre {
+      margin: 0;
+    }
+
+    /* SEÇÃO DE SELETORES */
+    .secao-seletores {
+      max-width: 1200px;
+      margin: 30px auto 0 auto;
+      background: #1e293b;
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+    }
+
+    .grid-seletores {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .card-seletor {
+      background: #0f172a;
+      padding: 15px;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .card-seletor:hover {
+      border-color: #38bdf8;
+      transform: translateY(-3px);
+    }
+
+    .card-seletor h4 {
+      margin-top: 0;
+      color: #38bdf8;
+    }
+
+    /* Demonstração visual dos seletores */
+    p.demo-tag { color: #f43f5e; font-weight: bold; margin: 0; }
+    .demo-classe { background-color: #8b5cf6; padding: 4px 8px; border-radius: 4px; color: white; display: inline-block; }
+    #demo-id { border-bottom: 2px solid #eab308; color: #eab308; font-weight: bold; }
+    .demo-hover {
+      display: inline-block;
+      padding: 6px 12px;
+      background: #0284c7;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .demo-hover:hover {
+      background: #22c55e;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false;">
+
+  <header>
+    <h1>Laboratório Interativo & Avançado de CSS</h1>
+    <p class="subtitulo">Aprenda Box Model, Estilização, Transformações, Flexbox e Seletores na prática!</p>
+    <a href="index.html" class="btn-voltar">⬅️ Voltar ao Início</a>
+  </header>
+
+  <div class="app-container">
+    
+    <!-- PAINEL DE CONTROLES -->
+    <div class="painel-controles">
+      
+      <div class="grupo-titulo">1. Dimensões & Espaço (Box Model)</div>
+      <div class="controle">
+        <label>width (Largura): <span id="v-width">160px</span></label>
+        <input type="range" id="c-width" min="80" max="250" value="160">
+      </div>
+      <div class="controle">
+        <label>height (Altura): <span id="v-height">100px</span></label>
+        <input type="range" id="c-height" min="50" max="180" value="100">
+      </div>
+      <div class="controle">
+        <label>padding (Espaço Interno): <span id="v-padding">15px</span></label>
+        <input type="range" id="c-padding" min="0" max="40" value="15">
+      </div>
+      <div class="controle">
+        <label>margin (Espaço Externo): <span id="v-margin">15px</span></label>
+        <input type="range" id="c-margin" min="0" max="40" value="15">
+      </div>
+
+      <div class="grupo-titulo">2. Cores, Bordas & Sombra</div>
+      <div class="controle">
+        <label>background-color:</label>
+        <input type="color" id="c-bg" value="#0284c7">
+      </div>
+      <div class="controle">
+        <label>border-radius (Arredondamento): <span id="v-radius">8px</span></label>
+        <input type="range" id="c-radius" min="0" max="50" value="8">
+      </div>
+      <div class="controle">
+        <label>border (Espessura): <span id="v-border">2px</span></label>
+        <input type="range" id="c-border" min="0" max="10" value="2">
+      </div>
+      <div class="controle">
+        <label>border-color:</label>
+        <input type="color" id="c-border-color" value="#38bdf8">
+      </div>
+      <div class="controle">
+        <label>box-shadow (Sombra): <span id="v-shadow">10px</span></label>
+        <input type="range" id="c-shadow" min="0" max="40" value="10">
+      </div>
+
+      <div class="grupo-titulo">3. Efeitos & Transformação</div>
+      <div class="controle">
+        <label>opacity (Opacidade): <span id="v-opacity">1</span></label>
+        <input type="range" id="c-opacity" min="0.1" max="1" step="0.1" value="1">
+      </div>
+      <div class="controle">
+        <label>transform: rotate (Rotação): <span id="v-rotate">0deg</span></label>
+        <input type="range" id="c-rotate" min="-180" max="180" value="0">
+      </div>
+      <div class="controle">
+        <label>font-size (Tamanho do Texto): <span id="v-font">16px</span></label>
+        <input type="range" id="c-font" min="10" max="28" value="16">
+      </div>
+
+      <div class="grupo-titulo">4. Layout (Container Pai Flex)</div>
+      <div class="controle">
+        <label>justify-content (Eixo Horizontal):</label>
+        <select id="c-justify">
+          <option value="center">center</option>
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+          <option value="space-between">space-between</option>
+          <option value="space-around">space-around</option>
+        </select>
+      </div>
+      <div class="controle">
+        <label>align-items (Eixo Vertical):</label>
+        <select id="c-align">
+          <option value="center">center</option>
+          <option value="flex-start">flex-start</option>
+          <option value="flex-end">flex-end</option>
+        </select>
+      </div>
+      <div class="controle">
+        <label>Ativar Modo Multi-itens (Flexbox):</label>
+        <select id="c-multiflex">
+          <option value="off">Desativado (1 Caixa)</option>
+          <option value="on">Ativado (3 Caixas)</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- PAINEL VISUAL -->
+    <div class="painel-visual">
+      
+      <!-- Container Arena -->
+      <div class="arena-container" id="arena">
+        
+        <!-- Bloco Principal com Camadas do Box Model -->
+        <div class="camada-margin" id="box-m">
+          <div class="camada-padding" id="box-p">
+            <div class="caixa-alvo" id="box-target">
+              Caixa 1
+            </div>
+          </div>
+        </div>
+
+        <!-- Caixas Extras para teste Flexbox -->
+        <div class="caixa-extra" id="extra1">Caixa 2</div>
+        <div class="caixa-extra" id="extra2">Caixa 3</div>
+
+      </div>
+
+      <!-- Código CSS Gerado -->
+      <div class="codigo-saida">
+        <pre id="codigo-css"></pre>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- GUIA DE SELETORES -->
+  <div class="secao-seletores">
+    <h2>Quem eu estou estilizando? (Seletores CSS)</h2>
+    
+    <div class="grid-seletores">
+      
+      <!-- Seletor de Tag -->
+      <div class="card-seletor">
+        <h4>1. Seletor de Elemento (Tag)</h4>
+        <p>Aplica o estilo a todas as tags do mesmo tipo.</p>
+        <code>p { color: red; }</code>
+        <br><br>
+        <p class="demo-tag">Sou um parágrafo &lt;p&gt;</p>
+      </div>
+
+      <!-- Seletor de Classe -->
+      <div class="card-seletor">
+        <h4>2. Seletor de Classe (.nome)</h4>
+        <p>Aplica a vários elementos que compartilham a mesma classe.</p>
+        <code>.destaque { bg: roxo; }</code>
+        <br><br>
+        <span class="demo-classe">class="destaque"</span>
+      </div>
+
+      <!-- Seletor de ID -->
+      <div class="card-seletor">
+        <h4>3. Seletor de ID (#nome)</h4>
+        <p>Exclusivo para um único elemento na página.</p>
+        <code>#unico { color: amarelo; }</code>
+        <br><br>
+        <span id="demo-id">id="unico"</span>
+      </div>
+
+      <!-- Pseudo-classe :hover -->
+      <div class="card-seletor">
+        <h4>4. Estado de Interação (:hover)</h4>
+        <p>Altera o estilo quando o mouse passa por cima.</p>
+        <code>button:hover { bg: verde; }</code>
+        <br><br>
+        <span class="demo-hover">Passe o mouse aqui!</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCRIPT DE INTERAÇÃO -->
+  <script>
+    // Mapeamento dos elementos do DOM
+    const ids = [
+      'c-width', 'c-height', 'c-padding', 'c-margin', 'c-bg',
+      'c-radius', 'c-border', 'c-border-color', 'c-shadow',
+      'c-opacity', 'c-rotate', 'c-font', 'c-justify', 'c-align', 'c-multiflex'
+    ];
+
+    const el = {};
+    ids.forEach(id => el[id] = document.getElementById(id));
+
+    const boxTarget = document.getElementById('box-target');
+    const boxM = document.getElementById('box-m');
+    const boxP = document.getElementById('box-p');
+    const arena = document.getElementById('arena');
+    const extra1 = document.getElementById('extra1');
+    const extra2 = document.getElementById('extra2');
+    const codigoCss = document.getElementById('codigo-css');
+
+    function atualizar() {
+      // Leitura dos Valores
+      const w = el['c-width'].value + 'px';
+      const h = el['c-height'].value + 'px';
+      const p = el['c-padding'].value + 'px';
+      const m = el['c-margin'].value + 'px';
+      const bg = el['c-bg'].value;
+      const radius = el['c-radius'].value + 'px';
+      const border = el['c-border'].value + 'px';
+      const borderColor = el['c-border-color'].value;
+      const shadowVal = el['c-shadow'].value;
+      const shadow = `0px ${shadowVal / 2}px ${shadowVal}px rgba(0,0,0,0.6)`;
+      const opacity = el['c-opacity'].value;
+      const rotate = el['c-rotate'].value + 'deg';
+      const font = el['c-font'].value + 'px';
+      const justify = el['c-justify'].value;
+      const align = el['c-align'].value;
+      const multiflex = el['c-multiflex'].value;
+
+      // Atualiza os indicadores de texto dos sliders
+      document.getElementById('v-width').textContent = w;
+      document.getElementById('v-height').textContent = h;
+      document.getElementById('v-padding').textContent = p;
+      document.getElementById('v-margin').textContent = m;
+      document.getElementById('v-radius').textContent = radius;
+      document.getElementById('v-border').textContent = border;
+      document.getElementById('v-shadow').textContent = shadowVal + 'px';
+      document.getElementById('v-opacity').textContent = opacity;
+      document.getElementById('v-rotate').textContent = rotate;
+      document.getElementById('v-font').textContent = font;
+
+      // Aplicação dos Estilos na Caixa Alvo
+      boxTarget.style.width = w;
+      boxTarget.style.height = h;
+      boxTarget.style.backgroundColor = bg;
+      boxTarget.style.borderRadius = radius;
+      boxTarget.style.border = `${border} solid ${borderColor}`;
+      boxTarget.style.boxShadow = shadow;
+      boxTarget.style.opacity = opacity;
+      boxTarget.style.transform = `rotate(${rotate})`;
+      boxTarget.style.fontSize = font;
+
+      // Aplicação nas camadas do Box Model (Camadas externas)
+      boxP.style.padding = p;
+      boxM.style.padding = m;
+
+      // Aplicação no Container Flexbox
+      arena.style.justifyContent = justify;
+      arena.style.alignItems = align;
+
+      // Controle do Modo Multi-itens (Flexbox)
+      if (multiflex === 'on') {
+        extra1.style.display = 'flex';
+        extra2.style.display = 'flex';
+      } else {
+        extra1.style.display = 'none';
+        extra2.style.display = 'none';
+      }
+
+      // Geração do Código CSS formatado
+      codigoCss.textContent = 
+`/* Estilo do Elemento (.minha-caixa) */
+.minha-caixa {
+  width: ${w};
+  height: ${h};
+  padding: ${p};
+  margin: ${m};
+  background-color: ${bg};
+  border-radius: ${radius};
+  border: ${border} solid ${borderColor};
+  box-shadow: ${shadow};
+  opacity: ${opacity};
+  transform: rotate(${rotate});
+  font-size: ${font};
+}
+
+/* Estilo do Container Pai (.container) */
+.container {
+  display: flex;
+  justify-content: ${justify};
+  align-items: ${align};
+}`;
+    }
+
+    // Registra os ouvintes para todos os controles
+    ids.forEach(id => {
+      el[id].addEventListener('input', atualizar);
+      el[id].addEventListener('change', atualizar);
+    });
+
+    // Renderização inicial
+    atualizar();
+
+    // --- BLOQUEIO DE INSPEÇÃO E BOTÃO DIREITO ---
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.keyCode === 123) { // F12
+        e.preventDefault();
+        return false;
+      }
+      if (e.ctrlKey && (
+          (e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+          e.keyCode === 85
+      )) { // Ctrl+Shift+I, J, C ou Ctrl+U
+        e.preventDefault();
+        return false;
+      }
+    });
+  </script>
+
+</body>
+</html>

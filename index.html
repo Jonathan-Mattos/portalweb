@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎓 Portal do Aluno - Desenvolvimento Web Interativo</title>
+  <style>
+    :root {
+      --bg-principal: #0b0f19;
+      --bg-card: #1e293b;
+      --bg-hover: #334155;
+      --cor-primaria: #38bdf8;
+      --cor-secundaria: #a855f7;
+      --cor-destaque: #22c55e;
+      --texto-cor: #f8fafc;
+      --texto-suave: #94a3b8;
+      --borda-cor: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none; /* Desabilita seleção de texto */
+    }
+
+    body {
+      background-color: var(--bg-principal);
+      color: var(--texto-cor);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--borda-cor);
+      padding: 25px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: var(--cor-primaria);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--texto-suave);
+      font-size: 1rem;
+    }
+
+    /* CONTAINER E MENUS */
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+      flex: 1;
+    }
+
+    .secao-titulo {
+      font-size: 1.4rem;
+      color: var(--cor-secundaria);
+      margin-bottom: 20px;
+      border-left: 4px solid var(--cor-secundaria);
+      padding-left: 10px;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .card-modulo {
+      background: var(--bg-card);
+      border: 1px solid var(--borda-cor);
+      border-radius: 14px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+
+    .card-modulo:hover {
+      transform: translateY(-5px);
+      border-color: var(--cor-primaria);
+      box-shadow: 0 10px 20px rgba(56, 189, 248, 0.15);
+    }
+
+    .card-topo h3 {
+      font-size: 1.3rem;
+      color: var(--cor-primaria);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-topo p {
+      color: var(--texto-suave);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .topicos-lista {
+      list-style: none;
+      margin-bottom: 25px;
+    }
+
+    .topicos-lista li {
+      color: var(--texto-cor);
+      font-size: 0.9rem;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .topicos-lista li::before {
+      content: "•";
+      color: var(--cor-destaque);
+      font-weight: bold;
+    }
+
+    .btn-acessar {
+      display: block;
+      text-align: center;
+      background: var(--cor-primaria);
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 12px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .btn-acessar:hover {
+      background: #7dd3fc;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--borda-cor);
+      color: var(--texto-suave);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false;">
+
+  <header>
+    <h1>Portal WEB</h1>
+    <p>Escolha um dos laboratórios interativos para iniciar seus estudos práticos de Front-End.</p>
+  </header>
+
+  <div class="container">
+    <h2 class="secao-titulo">Módulos de Aprendizagem</h2>
+
+    <div class="modules-grid">
+
+      <!-- MÓDULO 1 -->
+      <div class="card-modulo">
+        <div class="card-topo">
+          <h3>Hub: Seletores CSS & Formulários HTML</h3>
+          <p>Explore a sintaxe completa de seletores e crie formulários interativos com validação em tempo real.</p>
+          
+          <ul class="topicos-lista">
+            <li>Seletores Básicos, Combinadores e Atributos</li>
+            <li>Pseudo-classes e Pseudo-elementos CSS</li>
+            <li>Estruturas de Formulários e Tags de Entrada (`input`)</li>
+            <li>Listas de Opções, Caixas de Texto e Botões</li>
+            <li>Feedback Visual Dinâmico (`progress`, `meter`, `output`)</li>
+          </ul>
+        </div>
+        <!-- Altere o href para o nome exato do arquivo no seu servidor/pasta -->
+        <a href="hub_seletores_forms.html" class="btn-acessar">Acessar Hub de Seletores & Forms</a>
+      </div>
+
+      <!-- MÓDULO 2 -->
+      <div class="card-modulo">
+        <div class="card-topo">
+          <h3>Laboratório: Box Model & Flexbox</h3>
+          <p>Manipule propriedades visuais em tempo real, ajuste dimensões, transformações 2D e layouts responsivos.</p>
+          
+          <ul class="topicos-lista">
+            <li>Box Model (Width, Height, Padding, Margin)</li>
+            <li>Estilização Visual (Cores, Bordas, Sombras)</li>
+            <li>Transformações e Opacidade (`rotate`, `opacity`)</li>
+            <li>Layout com Flexbox (`justify-content`, `align-items`)</li>
+            <li>Gerador Automático de Código CSS em Tempo Real</li>
+          </ul>
+        </div>
+        <!-- Altere o href para o nome exato do arquivo no seu servidor/pasta -->
+        <a href="laboratorio_css.html" class="btn-acessar">Acessar Laboratório Avançado</a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>Ambiente protegido contra cópias e inspeção de código | Portal do Aluno</p>
+  </footer>
+
+  <!-- SCRIPT DE BLOQUEIO DO INSPECTOR E BOTÃO DIREITO -->
+  <script>
+    // 1. Bloqueia o Menu do Botão Direito (Context Menu)
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    // 2. Bloqueia Atalhos de Teclado do DevTools (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U)
+    document.addEventListener('keydown', function(e) {
+      // Tecla F12
+      if (e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+      }
+
+      // Atalhos com Ctrl + Shift + Key (I, J, C) ou Ctrl + U (Ver Código Fonte)
+      if (e.ctrlKey && (
+          (e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+          e.keyCode === 85
+      )) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  </script>
+
+</body>
+</html>
